@@ -19,6 +19,7 @@ func ws(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// 连接数没到100的整数时就打印一次连接数
 	n := atomic.AddInt64(&count, 1)
 	if n%100 == 0 {
 		log.Printf("Total number of connections: %v", n)

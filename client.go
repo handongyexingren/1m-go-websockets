@@ -16,11 +16,10 @@ var (
 	connections = flag.Int("conn", 1, "number of websocket connections")
 )
 
+// 测试只能创建4000个连接
 func main() {
 	flag.Usage = func() {
-		io.WriteString(os.Stderr, `Websockets client generator
-Example usage: ./client -ip=172.17.0.1 -conn=10
-`)
+		io.WriteString(os.Stderr, `Websockets client generatorExample usage: ./client -ip=172.17.0.1 -conn=10`)
 		flag.PrintDefaults()
 	}
 	flag.Parse()
@@ -31,6 +30,7 @@ Example usage: ./client -ip=172.17.0.1 -conn=10
 	for i := 0; i < *connections; i++ {
 		c, _, err := websocket.DefaultDialer.Dial(u.String(), nil)
 		if err != nil {
+			// 报错了websocket: bad handshake
 			fmt.Println("Failed to connect", i, err)
 			break
 		}

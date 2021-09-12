@@ -59,6 +59,7 @@ func (e *epoll) Remove(conn *websocket.Conn) error {
 
 func (e *epoll) Wait() ([]*websocket.Conn, error) {
 	events := make([]unix.EpollEvent, 100)
+	// 可响应的事件
 	n, err := unix.EpollWait(e.fd, events, 100)
 	if err != nil {
 		return nil, err
@@ -70,6 +71,7 @@ func (e *epoll) Wait() ([]*websocket.Conn, error) {
 		conn := e.connections[int(events[i].Fd)]
 		connections = append(connections, conn)
 	}
+	// 返回可相应的连接切片
 	return connections, nil
 }
 
